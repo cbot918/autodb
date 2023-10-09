@@ -1,5 +1,5 @@
-# autodb
-a database automation tool to boost small side-project
+# AutoDB
+a toy level db automation tool to boost small side-project
 
 </br>
 
@@ -18,7 +18,19 @@ a database automation tool to boost small side-project
 
 # Verify
 1. db container 正確啟動
-2. 資料庫有8張表及對應的資料
+```bash
+docker ps | grep autodb
+```
+2. 資料庫有8張表
+```bash
+docker exec -it autodb mysql -uroot -p12345 autodb -e "SELECT COUNT(table_name)
+	FROM information_schema.tables
+	WHERE table_schema = 'autodb';"
+```
+3. 讀一下 t_goods 表
+```bash
+docker exec -it autodb mysql -uroot -p12345  --default-character-set=utf8 autodb -e "SELECT * FROM t_goods;"
+```
 
 </br>
 
