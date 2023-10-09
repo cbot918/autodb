@@ -21,7 +21,7 @@ a toy level db automation tool to boost small side-project
 ```bash
 docker ps | grep autodb
 ```
-2. 資料庫有8張表
+2. 資料庫有 8張表
 ```bash
 docker exec -it autodb mysql -uroot -p12345 autodb -e "SELECT COUNT(table_name)
 	FROM information_schema.tables
