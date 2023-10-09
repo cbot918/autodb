@@ -2,15 +2,11 @@
 a database automation tool to boost small side-project
 
 ## Features:
-[ x ] Create database
-
-[ x ] Migrate sql
-
-[ x ] Read db and table metadata
-
-[　] Generate model
-
-[　] Generate dao ( 目前應該做不太出來 )
+- [x] Create database
+- [x] Migrate sql
+- [x] Read db and table metadata
+- [　] Generate model
+- [　] Generate dao ( 目前應該做不太出來 )
 
 ## Dependeicies:
 1. go1.19
