@@ -54,3 +54,9 @@ docker container rm autodb
 # Notes:
 - 實驗性質, 功能都極簡略
 - 只支援 MySQL
+
+
+# Reference:
+### [簡易秒殺系統-Go語言實現](https://github.com/Nobodiesljh/seckill-golang)
+
+### [祁老師SpringBoot秒殺實戰](https://www.bilibili.com/video/BV1i84y1i7zF?p=2&spm_id_from=pageDriver&vd_source=5e33dcdca19327cd3f2787b83dddbd6c)
