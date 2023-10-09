@@ -27,7 +27,7 @@ func CreateDB(cfg *Config) error {
 
 	logFlag := true
 	for logFlag {
-		fmt.Printf("waiting %s start ...\n", cfg.CONTAINER)
+		fmt.Printf("waiting %s container start ...\n", cfg.CONTAINER)
 		time.Sleep(2 * time.Second)
 		cmd1 := fmt.Sprintf("docker logs %s", cfg.CONTAINER)
 		result, err1 := exec.Command("/bin/sh", "-c", cmd1).Output()

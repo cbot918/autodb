@@ -33,7 +33,7 @@ func Migrate(cfg *Config, con *sql.DB) error {
 		fmt.Println(err.Error())
 		log.Fatal(err)
 	}
-	fmt.Printf("load %s to %s success\n", cfg.SQL_FILE, cfg.DB_NAME)
+	fmt.Printf("starting load %s to %s ...\n", cfg.SQL_FILE, cfg.DB_NAME)
 
 	// 抓 table 數量來比對 load sql 的進度
 	q := fmt.Sprintf(`SELECT COUNT(table_name)

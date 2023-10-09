@@ -4,6 +4,7 @@ import (
 	"autodb/internal"
 	"fmt"
 	"log"
+	"time"
 )
 
 func main() {
@@ -33,6 +34,8 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	fmt.Println("3秒後開始 read metadata")
+	time.Sleep(3 * time.Second)
 
 	// initial DBMetadata: get result dbm
 	dbm, err := internal.NewDBMetadata(cfg, db)
