@@ -57,18 +57,13 @@ odb clean     # clean up container
 
 </br>
 
-# Clean Up
-```bash
-docker container stop autodb
-docker container rm autodb
-```
 
 </br>
 
 # Notes:
 - 實驗性質, 功能都極簡略
 - 只支援 MySQL
-
+- 幾張表的驗證有寫死的 work around 忘了改, 跑的話請先用內建的 sample.sql
 
 # Reference:
 ### [簡易秒殺系統-Go語言實現](https://github.com/Nobodiesljh/seckill-golang)
