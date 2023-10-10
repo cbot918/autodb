@@ -18,14 +18,14 @@ func main() {
 		log.Fatal(err)
 	}
 
-	// createdb
-	err = internal.CreateDB(cfg)
+	// initial db pool
+	db, err := internal.NewDB(cfg)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	// initial db pool
-	db, err := internal.NewDB(cfg)
+	// createdb
+	err = internal.CreateDB(cfg)
 	if err != nil {
 		log.Fatal(err)
 	}

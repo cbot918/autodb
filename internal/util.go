@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
+	"reflect"
 )
 
 func PrintJSON(v any) {
@@ -29,4 +30,63 @@ func NewDB(cfg *Config) (*sql.DB, error) {
 		return nil, err
 	}
 	return conn, err
+}
+
+func Init() (*Config, *sql.DB, error, error) {
+
+	cfg, cfgErr := NewConfig()
+	db, dbErr := NewDB(cfg)
+
+	return cfg, db, cfgErr, dbErr
+}
+
+func RowsBind(rows *sql.Rows, dest interface{}) error {
+	// Use reflection to get the type of the destination struct
+	destType := reflect.TypeOf(dest).Elem()
+
+	// Use reflection to get the values of the destination struct's fields
+	destValues := make([]reflect.Value, destType.NumField())
+
+	for i := 0; i < destType.NumField(); i++ {
+		field := destType.Field(i)
+		destValues[i] = reflect.ValueOf(dest).Elem().FieldByName(field.Name)
+	}
+
+	// Create an interface slice for Scan
+	destInterfaces := make([]interface{}, len(destValues))
+	for i, v := range destValues {
+		destInterfaces[i] = v.Addr().Interface()
+	}
+
+	// Scan the row into the struct fields
+	if err := rows.Scan(destInterfaces...); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func RowBind(row *sql.Row, dest interface{}) error {
+	destType := reflect.TypeOf(dest).Elem()
+
+	// Use reflection to get the values of the destination struct's fields
+	destValues := make([]reflect.Value, destType.NumField())
+
+	for i := 0; i < destType.NumField(); i++ {
+		field := destType.Field(i)
+		destValues[i] = reflect.ValueOf(dest).Elem().FieldByName(field.Name)
+	}
+
+	// Create an interface slice for Scan
+	destInterfaces := make([]interface{}, len(destValues))
+	for i, v := range destValues {
+		destInterfaces[i] = v.Addr().Interface()
+	}
+
+	// Scan the row into the struct fields
+	if err := row.Scan(destInterfaces...); err != nil {
+		return err
+	}
+
+	return nil
 }
