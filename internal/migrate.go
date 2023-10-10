@@ -49,7 +49,7 @@ func Migrate(cfg *Config, con *sql.DB) error {
 		if err := row.Scan(&count); err != nil {
 			log.Fatal(err)
 		}
-		fmt.Println("tables not ready: ", target-count)
+		fmt.Println("tables to be ready: ", target-count)
 	}
 
 	fmt.Println("load table finish!")
