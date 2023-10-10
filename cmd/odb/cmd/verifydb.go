@@ -4,8 +4,11 @@ Copyright © 2023 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
+	"database/sql"
 	"fmt"
 
+	"github.com/cbot918/autodb/cmd/odb/cmd/pkg"
+	"github.com/cbot918/autodb/internal"
 	"github.com/spf13/cobra"
 )
 
@@ -15,8 +18,17 @@ var verifydbCmd = &cobra.Command{
 	Short: "verifydb short description",
 	Long:  `verifydb short description`,
 	Run: func(cmd *cobra.Command, args []string) {
-		defer DB.Close()
-		num, err := tableNumber()
+		cfg, db, cfgErr, dbErr := pkg.Init()
+		if cfgErr != nil {
+			fmt.Println("load config error")
+			return
+		}
+		if dbErr != nil {
+			fmt.Println("db open error")
+			return
+		}
+		defer db.Close()
+		num, err := tableNumber(cfg, db)
 		if err != nil {
 			fmt.Println("query table count failed")
 			return
@@ -29,12 +41,12 @@ func init() {
 	rootCmd.AddCommand(verifydbCmd)
 }
 
-func tableNumber() (int64, error) {
+func tableNumber(cfg *internal.Config, db *sql.DB) (int64, error) {
 	q := fmt.Sprintf(`SELECT COUNT(table_name)
 	FROM information_schema.tables
-	WHERE table_schema = '%s'`, Cfg.DB_NAME)
+	WHERE table_schema = '%s'`, cfg.DB_NAME)
 
-	rows, err := DB.Query(q)
+	rows, err := db.Query(q)
 	if err != nil {
 		return 0, err
 	}

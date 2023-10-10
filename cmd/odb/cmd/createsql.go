@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/cbot918/autodb/cmd/odb/cmd/pkg"
 	"github.com/spf13/cobra"
 )
 
@@ -18,8 +19,19 @@ var createsqlCmd = &cobra.Command{
 	Short: "createsql short description",
 	Long:  `createsql short description`,
 	Run: func(cmd *cobra.Command, args []string) {
-		defer DB.Close()
-		if isSQLFile(Cfg.SQL_FILE) {
+
+		cfg, db, cfgErr, dbErr := pkg.Init()
+		if cfgErr != nil {
+			fmt.Println("load config error")
+			return
+		}
+		if dbErr != nil {
+			fmt.Println("db open error")
+			return
+		}
+		defer db.Close()
+
+		if isSQLFile(cfg.SQL_FILE) {
 
 			defaultSQL := "https://raw.githubusercontent.com/cbot918/autodb/main/sample.sql"
 			fmt.Println("download: ", defaultSQL)
@@ -32,7 +44,7 @@ var createsqlCmd = &cobra.Command{
 			return
 		}
 
-		fmt.Println(Cfg.SQL_FILE + " ready, go next step!")
+		fmt.Println(cfg.SQL_FILE + " ready, go next step!")
 
 	},
 }

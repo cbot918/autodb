@@ -6,6 +6,7 @@ package cmd
 import (
 	"fmt"
 
+	"github.com/cbot918/autodb/cmd/odb/cmd/pkg"
 	"github.com/cbot918/autodb/internal"
 	"github.com/spf13/cobra"
 )
@@ -16,8 +17,19 @@ var createdbCmd = &cobra.Command{
 	Short: "createdb short description",
 	Long:  `createdb long description`,
 	Run: func(cmd *cobra.Command, args []string) {
-		defer DB.Close()
-		if err := createdb(); err != nil {
+
+		cfg, db, cfgErr, dbErr := pkg.Init()
+		if cfgErr != nil {
+			fmt.Println("load config error")
+			return
+		}
+		if dbErr != nil {
+			fmt.Println("db open error")
+			return
+		}
+
+		defer db.Close()
+		if err := createdb(cfg); err != nil {
 			fmt.Println("createdb failed")
 			return
 		}
@@ -30,9 +42,9 @@ func init() {
 
 }
 
-func createdb() error {
+func createdb(cfg *internal.Config) error {
 	// createdb
-	err := internal.CreateDB(Cfg)
+	err := internal.CreateDB(cfg)
 	if err != nil {
 		return err
 	}
