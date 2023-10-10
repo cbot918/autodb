@@ -1,10 +1,11 @@
 package main
 
 import (
-	"autodb/internal"
 	"fmt"
 	"log"
 	"time"
+
+	"github.com/cbot918/autodb/internal"
 )
 
 func main() {
