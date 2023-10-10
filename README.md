@@ -11,26 +11,39 @@ a toy level db automation tool to boost small side-project
 </br>
 
 # Getting Started
-1. `go mod tidy` (安裝go依賴)
-2. 看一下 .env 內容 ( 確認一下 PORT 跟 CONTAINER_NAME 沒有跟本地衝突 )
-2. `go run .`
-
-</br>
-
-# Verify
-1. db container 正確啟動
+### 用 go 執行
 ```bash
-docker ps | grep autodb
+git clone https://github.com/cbot918/autodb
+cd autodb && go run .
 ```
-2. 資料庫有 8張表
+verify scripts
 ```bash
+# 看資料庫有 8 張表
 docker exec -it autodb mysql -uroot -p12345 autodb -e "SELECT COUNT(table_name)
 	FROM information_schema.tables
 	WHERE table_schema = 'autodb';"
 ```
-3. 讀一下 t_goods 表
 ```bash
+# 撈資料出來看
 docker exec -it autodb mysql -uroot -p12345  --default-character-set=utf8 autodb -e "SELECT * FROM t_goods;"
+```
+
+### 下載 cli 來用
+1. 下載安裝
+```bash
+curl -OL https://github.com/cbot918/autodb/releases/download/v0.0.1/odb && sudo chmod +x odb && sudo mv odb /usr/local/bin
+```
+輸入 `odb` 這樣應該會看到 cli help
+
+2. 開始
+```bash
+mkdir testodb && cd testodb
+odb init      # init .env
+odb createdb  # create mysql container
+odb createsql # download sample.sql
+odb migrate   # odb migrate
+odb verifydb  # see table numbers
+odb clean     # clean up container
 ```
 
 </br>
