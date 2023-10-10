@@ -16,6 +16,7 @@ var cleanCmd = &cobra.Command{
 	Short: "short clean description",
 	Long:  `long clean description`,
 	Run: func(cmd *cobra.Command, args []string) {
+		defer DB.Close()
 		if err := clean(); err != nil {
 			fmt.Println("clean failed")
 			return

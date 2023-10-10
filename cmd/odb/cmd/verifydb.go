@@ -15,6 +15,7 @@ var verifydbCmd = &cobra.Command{
 	Short: "verifydb short description",
 	Long:  `verifydb short description`,
 	Run: func(cmd *cobra.Command, args []string) {
+		defer DB.Close()
 		num, err := tableNumber()
 		if err != nil {
 			fmt.Println("query table count failed")

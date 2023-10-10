@@ -16,6 +16,7 @@ var createdbCmd = &cobra.Command{
 	Short: "createdb short description",
 	Long:  `createdb long description`,
 	Run: func(cmd *cobra.Command, args []string) {
+		defer DB.Close()
 		if err := createdb(); err != nil {
 			fmt.Println("createdb failed")
 			return

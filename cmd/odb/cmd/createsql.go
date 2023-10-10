@@ -18,10 +18,10 @@ var createsqlCmd = &cobra.Command{
 	Short: "createsql short description",
 	Long:  `createsql short description`,
 	Run: func(cmd *cobra.Command, args []string) {
-
+		defer DB.Close()
 		if isSQLFile(Cfg.SQL_FILE) {
 
-			defaultSQL := "https://raw.githubusercontent.com/cbot918/autodb/main/cmd/odb/sample.sql"
+			defaultSQL := "https://raw.githubusercontent.com/cbot918/autodb/main/sample.sql"
 			fmt.Println("download: ", defaultSQL)
 
 			if err := downloadSQL(defaultSQL); err != nil {

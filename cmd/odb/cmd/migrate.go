@@ -16,7 +16,7 @@ var migrateCmd = &cobra.Command{
 	Short: "migrate short description",
 	Long:  `migrate short description long discription`,
 	Run: func(cmd *cobra.Command, args []string) {
-
+		defer DB.Close()
 		if err := migrate(); err != nil {
 			fmt.Println("migrate failed")
 			return
