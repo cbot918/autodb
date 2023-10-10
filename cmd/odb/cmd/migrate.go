@@ -30,7 +30,7 @@ var migrateCmd = &cobra.Command{
 		defer db.Close()
 
 		if err := migrate(cfg, db); err != nil {
-			fmt.Println("migrate failed")
+			fmt.Println("migrate failed: ", err)
 			return
 		}
 		fmt.Println("migrate success")

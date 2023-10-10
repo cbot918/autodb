@@ -30,7 +30,7 @@ func main() {
 
 	internal.PrintJSON(dbm)
 
-	gt := gentype.NewGentype(dbm)
+	gt := gentype.NewGentype(cfg, dbm)
 
 	err = gt.InitContent()
 	if err != nil {

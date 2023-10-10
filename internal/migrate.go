@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"os/exec"
+	"strconv"
 	"time"
 )
 
@@ -41,7 +42,10 @@ func Migrate(cfg *Config, con *sql.DB) error {
 	WHERE table_schema = '%s';`, cfg.DB_NAME)
 
 	var count int64
-	target := int64(8)
+	target, err := strconv.ParseInt(cfg.DB_TABLES, 10, 64)
+	if err != nil {
+		return err
+	}
 
 	for count != target {
 		time.Sleep(time.Second * 2)

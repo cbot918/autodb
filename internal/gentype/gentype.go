@@ -19,10 +19,10 @@ type ModelType struct {
 	Content  string
 }
 
-func NewGentype(dbm *internal.DBMetadata) *Gentype {
+func NewGentype(cfg *internal.Config, dbm *internal.DBMetadata) *Gentype {
 	return &Gentype{
 		DBM:     dbm,
-		pkgName: "types",
+		pkgName: cfg.TYPE_PKG_NAME,
 	}
 }
 
