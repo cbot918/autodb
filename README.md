@@ -53,7 +53,7 @@ odb clean     # clean up container
 - [x] Migrate sql
 - [x] Read db and table metadata
 - [x] Generate model
-- [x] support sqlc
+- [x] init sqlc
 - [ ] mysql / postgres 功能測試
 
 </br>
