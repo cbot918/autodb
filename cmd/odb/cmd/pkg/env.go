@@ -10,7 +10,8 @@ CONTAINER="autodb"
 SQL_FILE="sample.sql"
 
 # database
-# dsn format: root:12345@tcp(localhost:3342)/autodb?charset=utf8
+# mysql dsn: 			root:12345@tcp(localhost:3342)/autodb?charset=utf8
+# postgres dsn: 	postgres://postgres:12345@localhost:5432/autodb?sslmode=disable
 DB_DRIVER="mysql"
 DB_USER="root"
 DB_PASSWORD="12345"

@@ -30,7 +30,7 @@ var createdbCmd = &cobra.Command{
 
 		defer db.Close()
 		if err := createdb(cfg); err != nil {
-			fmt.Println("createdb failed")
+			fmt.Println("createdb failed: ", err)
 			return
 		}
 		fmt.Println("createdb success")
