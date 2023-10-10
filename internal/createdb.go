@@ -10,19 +10,31 @@ import (
 
 func CreateDB(cfg *Config) error {
 	var err error
+	var cmd string
+	determineMySQL := "MySQL Community Server - GPL."
+	determinePostgres := "database system is ready to accept connections"
 
-	determineString := "MySQL Community Server - GPL."
-
-	cmd := fmt.Sprintf(`docker run -dit -p %s:3306 --name %s -e MYSQL_ROOT_PASSWORD=%s -e MYSQL_DATABASE=%s mysql:latest`,
-		cfg.DB_PORT,
-		cfg.CONTAINER,
-		cfg.DB_PASSWORD,
-		cfg.DB_NAME,
-	)
-
+	if cfg.DB_DRIVER == "mysql" {
+		cmd = fmt.Sprintf(`docker run -dit -p %s:3306 --name %s -e MYSQL_ROOT_PASSWORD=%s -e MYSQL_DATABASE=%s mysql:latest`,
+			cfg.DB_PORT,
+			cfg.CONTAINER,
+			cfg.DB_PASSWORD,
+			cfg.DB_NAME,
+		)
+	} else if cfg.DB_DRIVER == "postgres" {
+		fmt.Println("in createdb postgres")
+		cmd = fmt.Sprintf(`docker run -dit -p %s:5432 --name %s -e POSTGRES_PASSWORD=%s -e POSTGRES_DB=%s postgres`,
+			cfg.DB_PORT,
+			cfg.CONTAINER,
+			cfg.DB_PASSWORD,
+			cfg.DB_NAME,
+		)
+	} else {
+		return fmt.Errorf("driver " + cfg.DB_DRIVER + " not support, check .env")
+	}
 	err = exec.Command("/bin/sh", "-c", cmd).Run()
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 
 	logFlag := true
@@ -34,10 +46,13 @@ func CreateDB(cfg *Config) error {
 		if err != nil {
 			log.Fatal(err1)
 		}
-
-		if strings.Contains(string(result), determineString) {
+		if cfg.DB_DRIVER == "mysql" && strings.Contains(string(result), determineMySQL) {
 			logFlag = false
 		}
+		if cfg.DB_DRIVER == "postgres" && strings.Contains(string(result), determinePostgres) {
+			logFlag = false
+		}
+
 	}
 
 	fmt.Printf("%s create success\n", cfg.CONTAINER)

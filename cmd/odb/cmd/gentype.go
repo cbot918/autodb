@@ -7,7 +7,6 @@ import (
 	"database/sql"
 	"fmt"
 
-	"github.com/cbot918/autodb/cmd/odb/cmd/pkg"
 	"github.com/cbot918/autodb/internal"
 	"github.com/cbot918/autodb/internal/gentype"
 	"github.com/spf13/cobra"
@@ -19,7 +18,7 @@ var gentypeCmd = &cobra.Command{
 	Long:  `gentype long`,
 	Run: func(cmd *cobra.Command, args []string) {
 
-		cfg, db, cfgErr, dbErr := pkg.Init()
+		cfg, db, cfgErr, dbErr := internal.Init()
 		if cfgErr != nil {
 			fmt.Println("load config error")
 			return

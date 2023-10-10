@@ -7,7 +7,6 @@ import (
 	"database/sql"
 	"fmt"
 
-	"github.com/cbot918/autodb/cmd/odb/cmd/pkg"
 	"github.com/cbot918/autodb/internal"
 	"github.com/spf13/cobra"
 )
@@ -18,7 +17,7 @@ var cleanCmd = &cobra.Command{
 	Short: "short clean description",
 	Long:  `long clean description`,
 	Run: func(cmd *cobra.Command, args []string) {
-		cfg, db, cfgErr, dbErr := pkg.Init()
+		cfg, db, cfgErr, dbErr := internal.Init()
 		if cfgErr != nil {
 			fmt.Println("load config error")
 			return

@@ -52,8 +52,9 @@ odb clean     # clean up container
 - [x] Create database
 - [x] Migrate sql
 - [x] Read db and table metadata
-- [　] Generate model
-- [　] Generate dao ( 目前應該做不太出來 )
+- [x] Generate model
+- [x] support sqlc
+- [ ] mysql / postgres 功能測試
 
 </br>
 

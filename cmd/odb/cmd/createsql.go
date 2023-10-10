@@ -9,7 +9,7 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/cbot918/autodb/cmd/odb/cmd/pkg"
+	"github.com/cbot918/autodb/internal"
 	"github.com/spf13/cobra"
 )
 
@@ -20,7 +20,7 @@ var createsqlCmd = &cobra.Command{
 	Long:  `createsql short description`,
 	Run: func(cmd *cobra.Command, args []string) {
 
-		cfg, db, cfgErr, dbErr := pkg.Init()
+		cfg, db, cfgErr, dbErr := internal.Init()
 		if cfgErr != nil {
 			fmt.Println("load config error")
 			return

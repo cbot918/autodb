@@ -5,6 +5,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"reflect"
+
+	_ "github.com/go-sql-driver/mysql"
+	_ "github.com/lib/pq"
 )
 
 func PrintJSON(v any) {
@@ -17,13 +20,26 @@ func PrintJSON(v any) {
 
 func NewDB(cfg *Config) (*sql.DB, error) {
 	//"root:12345@tcp(localhost:3309)/sec-kill?charset=utf8"
-	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8",
-		cfg.DB_USER,
-		cfg.DB_PASSWORD,
-		cfg.DB_HOST,
-		cfg.DB_PORT,
-		cfg.DB_NAME,
-	)
+	var dsn string
+	if cfg.DB_DRIVER == "mysql" {
+		dsn = fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8",
+			cfg.DB_USER,
+			cfg.DB_PASSWORD,
+			cfg.DB_HOST,
+			cfg.DB_PORT,
+			cfg.DB_NAME,
+		)
+	} else if cfg.DB_DRIVER == "postgres" {
+		dsn = fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable",
+			cfg.DB_USER,
+			cfg.DB_PASSWORD,
+			cfg.DB_HOST,
+			cfg.DB_PORT,
+			cfg.DB_NAME,
+		)
+	} else {
+		return nil, fmt.Errorf("database driver not found, check .env")
+	}
 
 	conn, err := sql.Open(cfg.DB_DRIVER, dsn)
 	if err != nil {
