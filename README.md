@@ -62,9 +62,7 @@ odb clean     # clean up container
 </br>
 
 # Notes:
-- 實驗性質, 功能都極簡略
-- 只支援 MySQL
-- 幾張表的驗證有寫死的 work around 忘了改, 跑的話請先用內建的 sample.sql
+- beta 階段, 功能相對簡略, 沒有嚴謹測試
 
 # Reference:
 ### [簡易秒殺系統-Go語言實現](https://github.com/Nobodiesljh/seckill-golang)
